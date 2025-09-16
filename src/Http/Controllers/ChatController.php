@@ -81,14 +81,13 @@ class ChatController extends Controller
         if (!config('chat-soul.features.message_search')) {
             return response()->json(['message' => 'Search feature is disabled'], 403);
         }
-
         $request->validate([
             'query' => 'required|string|min:2|max:100',
             'type' => 'sometimes|in:messages,conversations,all',
         ]);
 
         $user = $request->user();
-        $query = $request->query;
+        $query = $request->get('query');
         $type = $request->get('type', 'all');
         $results = [];
 
